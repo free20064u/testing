@@ -50,9 +50,9 @@
 
           <nav class="nav-menu d-none d-lg-block">
             <ul>
-              <li class="active"><a href="index.html">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#services">Services</a></li>
+              <li class="active"><a href="{% url 'index'%} ">Home</a></li>
+              <li><a href="{% url 'programs' %}">Programs</a></li>
+              <li><a href="#">Services</a></li>
               <li><a href="#portfolio">Portfolio</a></li>
               <li><a href="#team">Team</a></li>
               <li class="drop-down"><a href="">Drop Down</a>
@@ -72,7 +72,7 @@
                   <li><a href="#">Drop Down 4</a></li>
                 </ul>
               </li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="{% url 'contact' %}">Contact</a></li>
 
             </ul>
           </nav><!-- .nav-menu -->
@@ -112,8 +112,8 @@
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'index' %}">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'programs' %}">Programs</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
