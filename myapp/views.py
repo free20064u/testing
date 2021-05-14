@@ -6,7 +6,12 @@ def index(request):
 
 
 def programs(request):
-    return render(request, 'programs.html')
+    programs = ['General Science', 'Agricultural science', 'Business','General Arts', 'Home Economics', 'Visual Arts']
+    
+    context = {
+        'programs': programs
+    }
+    return render(request, 'programs.html', context)
 
 
 def contact(request):

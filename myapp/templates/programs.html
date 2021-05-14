@@ -4,59 +4,24 @@
 {% block content %}
 <!-- ======= Services Section ======= -->
 <section id="services" class="services section-bg">
-      <div class="container" data-aos="fade-up">
+  <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>PROGRAMS</h2>
-          <p>This are the programs or courses offered in the school.</p>
+          <h2>Programs</h2>
+          <p>This are the programs offered by the school.</p>
         </div>
 
         <div class="row">
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
-            <div class="icon-box iconbox-blue" style="background-color: blueviolet; color: white;">
-              <h4><a href="">General Science</a></h4>
-              <p>Want to know more. Click<a href=""> here</a> for details</p>
+          {% for program in programs %}
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-5" data-aos="zoom-in" data-aos-delay="100">
+            <div class="icon-box iconbox-blue">
+              <h4><a href="">{{ program }}</a></h4>
+              <p>Click here for detail about the course of study</p>
             </div>
           </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box iconbox-orange ">
-              <h4><a href="">Agricultural science</a></h4>
-              <p>Want to know more. Click<a href=""> here</a> for details</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300" >
-            <div class="icon-box iconbox-pink" style="background-color: blueviolet; color: white;">
-              <h4><a href="">Business</a></h4>
-              <p>Want to know more. Click<a href=""> here</a> for details</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box iconbox-yellow">
-              <h4><a href="">General Arts</a></h4>
-              <p>Want to know more. Click<a href=""> here</a> for details</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box iconbox-red" style="background-color: blueviolet; color: white;">
-              <h4><a href="">Home Economics</a></h4>
-              <p>Want to know more. Click<a href=""> here</a> for details</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
-            <div class="icon-box iconbox-teal">
-              <h4><a href="">Visual Arts</a></h4>
-              <p>Want to know more. Click<a href=""> here</a> for details</p>
-            </div>
-          </div>
-
+          {% endfor %}
         </div>
-
-      </div>
-    </section><!-- End Services Section -->
+  </div>
+</section><!-- End Services Section -->
 
 {% endblock content %}
