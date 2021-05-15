@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 def index(request):
@@ -16,3 +16,11 @@ def programs(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+
+def course(request, course=None):
+    course = course
+    context = {
+        'course': course
+    }
+    return render(request, 'course.html', context)
