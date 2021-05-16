@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from .models import Program
 
 # Create your views here.
 def index(request):
@@ -6,7 +7,7 @@ def index(request):
 
 
 def programs(request):
-    programs = ['General Science', 'Agricultural science', 'Business','General Arts', 'Home Economics', 'Visual Arts']
+    programs = Program.objects.all()
     
     context = {
         'programs': programs
@@ -19,8 +20,10 @@ def contact(request):
 
 
 def course(request, course=None):
+    program = get_object_or_404(Program, course=course)
     course = course
     context = {
-        'course': course
+        'course': course,
+        'program': program
     }
     return render(request, 'course.html', context)

@@ -27,6 +27,7 @@
                 <h6>SUBJECTS</h6>
                 <p> This is the subjects to be studied in the school.</p>
                 <ul>
+                  {% for program in program.course.all() %}
                     <li>English</li>
                     <li>Mathematics</li>
                     <li>Integrated Science</li>
@@ -35,6 +36,7 @@
                     <li>Chemistry</li>
                     <li>Elective Mathematics</li>
                     <li>Physics</li>
+                  {% endfor %}
                 </ul>
             </div>
         </div>
