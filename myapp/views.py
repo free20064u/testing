@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Program, ProgramWithCourses
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from .forms import Course
 
 # Create your views here.
 def index(request):
@@ -31,3 +32,26 @@ def course(request, course=None):
         'program_with_courses': program_with_courses
     }
     return render(request, 'course.html', context)
+
+
+def addcourse(request):
+    if request.method == 'POST':
+        form = Course()
+        form.is_valid()
+        form.save()
+        messages.info(request, 'Course has been added succesfully')
+        return render(request, 'addcourse.html')
+    else:   
+        form = Course()
+        context = {
+        'form': form
+        }
+        return render(request, 'addcourse.html', context)
+
+
+def addprogram(request):
+    form = Program()
+    context = {
+        'form': form
+    }
+    return render(request, 'addprogram.html', context)
