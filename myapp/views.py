@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Program
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Program, ProgramWithCourses
+from django.contrib import messages
+from django.contrib.auth.models import User, auth
 
 # Create your views here.
 def index(request):
@@ -20,10 +22,12 @@ def contact(request):
 
 
 def course(request, course=None):
-    program = get_object_or_404(Program, course=course)
+    core_courses = ['English', 'Integrated science', 'Mathematics', 'Social Studies']
+    program_with_courses = get_object_or_404(ProgramWithCourses, program_name=course)
     course = course
     context = {
         'course': course,
-        'program': program
+        'core_courses': core_courses,
+        'program_with_courses': program_with_courses
     }
     return render(request, 'course.html', context)
