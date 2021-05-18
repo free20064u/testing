@@ -36,7 +36,7 @@ def course(request, course=None):
 
 def addcourse(request):
     if request.method == 'POST':
-        form = Course()
+        form = Course(request.POST)
         form.is_valid()
         form.save()
         messages.info(request, 'Course has been added succesfully')
