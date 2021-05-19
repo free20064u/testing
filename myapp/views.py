@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Program, ProgramWithCourses
+from .models import Programs, ProgramWithCourses
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
-from .forms import Course
+from .forms import Course, Program, ProgramWithCourse
 
 # Create your views here.
 def index(request):
@@ -10,7 +10,7 @@ def index(request):
 
 
 def programs(request):
-    programs = Program.objects.all()
+    programs = ProgramWithCourses.objects.all()
     
     context = {
         'programs': programs
@@ -25,13 +25,17 @@ def contact(request):
 def course(request, course=None):
     core_courses = ['English', 'Integrated science', 'Mathematics', 'Social Studies']
     program_with_courses = get_object_or_404(ProgramWithCourses, program_name=course)
-    course = course
-    context = {
-        'course': course,
-        'core_courses': core_courses,
-        'program_with_courses': program_with_courses
-    }
-    return render(request, 'course.html', context)
+    if program_with_courses is not None:
+        course = course
+        context = {
+            'course': course,
+            'core_courses': core_courses,
+            'program_with_courses': program_with_courses
+        }
+        return render(request, 'course.html', context)
+    else:
+        messages.info(request, 'Cousrse does not exist')
+        return render(request, 'course.html')
 
 
 def addcourse(request):
@@ -50,8 +54,30 @@ def addcourse(request):
 
 
 def addprogram(request):
-    form = Program()
-    context = {
+    if request.method == 'POST':
+        form = Program(request.POST)
+        form.is_valid()
+        form.save()
+        messages.success(request, 'Program was added succesfully')
+        return render(request, 'addcourse.html')
+    else:
+        form = Program()
+        context = {
         'form': form
-    }
-    return render(request, 'addprogram.html', context)
+        }
+        return render(request, 'addcourse.html', context)
+
+
+def addprogramwithcourse(request):
+    if request.method == 'POST':
+        form = ProgramWithCourse(request.POST)
+        form.is_valid()
+        form.save()
+        messages.success(request, 'Program with course was add succefully')
+        return render(request, 'addcourse.html')
+    else:
+        form = ProgramWithCourse()
+        context = {
+            'form': form
+        }
+        return render(request, 'addcourse.html', context)

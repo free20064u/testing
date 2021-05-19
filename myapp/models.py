@@ -10,7 +10,7 @@ class Course(models.Model):
 
 
 
-class Program(models.Model):
+class Programs(models.Model):
     program_name = models.CharField(max_length=100, default='')
     
 

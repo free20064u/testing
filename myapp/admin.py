@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Program, Course, ProgramWithCourses
+from .models import Programs, Course, ProgramWithCourses
 
 
 # Register your models here.
-admin.site.register(Program)
+admin.site.register(Programs)
 admin.site.register(Course)
 admin.site.register(ProgramWithCourses)
