@@ -1,12 +1,12 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import Course, ProgramWithCourses, Programs
+from .models import Courses, ProgramWithCourses, Programs
 
 
 class Course(ModelForm):
     course_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder':'Course name', 'class':'form-control'}))
     class Meta:
-        model = Course
+        model = Courses
         fields = ['course_name']
 
 
@@ -19,12 +19,10 @@ class Program(ModelForm):
 
 
 class ProgramWithCourse(ModelForm):
-    program_name = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Program', 'class': 'form-control mt-2'}))
-    course1 = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Course 1', 'class': 'form-control mt-2'}))
-    course2 = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Course 2', 'class': 'form-control mt-2'}))
-    course3 = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Course 3', 'class': 'form-control mt-2'}))
-    course4 = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Course 4', 'class': 'form-control mt-2'}))
+    program_name = forms.ModelChoiceField(queryset=Programs.objects.all(), widget=forms.Select(attrs={'placeholder':'Program', 'class':'form-control'}))
+    course = forms.ModelChoiceField(queryset=Courses.objects.all(),widget=forms.Select(attrs={'placeholder':'Program', 'class':'form-control'}))
+   
 
     class Meta:
         model = ProgramWithCourses
-        fields = ['program_name', 'course1', 'course2', 'course3', 'course4']
+        fields = ['program_name', 'course']
