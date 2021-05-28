@@ -20,7 +20,12 @@ class Programs(models.Model):
 
 class ProgramWithCourses(models.Model):
     programs = models.ForeignKey(Programs, null=True, on_delete=models.PROTECT)
-    courses = models.ForeignKey(Courses, null=True, on_delete=models.PROTECT)
+
+    course1 = models.CharField(max_length=100, default='')
+    course2 = models.CharField(max_length=100, default='')
+    course3 = models.CharField(max_length=100, default='')
+    course4 = models.CharField(max_length=100, default='')
+
 
     def __str__(self):
-        return f"Program:{self.programs}, Courses:{self.courses}"
+        return f"Program:{self.programs}, Course1:{self.course1}"

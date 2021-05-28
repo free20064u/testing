@@ -24,7 +24,8 @@ def contact(request):
 
 def course(request, course=None):
     core_courses = ['English', 'Integrated science', 'Mathematics', 'Social Studies']
-    program_with_courses = get_object_or_404(ProgramWithCourses, program_name=course)
+    courseID = get_object_or_404(Programs, program_name = course)
+    program_with_courses = get_object_or_404(ProgramWithCourses, programs=courseID.id)
     if program_with_courses is not None:
         course = course
         context = {
@@ -81,3 +82,21 @@ def addprogramwithcourse(request):
             'form': form
         }
         return render(request, 'addcourse.html', context)
+
+def dashboord(request):
+    return render(request, 'dashboard.html')
+
+
+def allusers(request):
+    users = User.objects.all()
+    context = {
+        'users': users
+    }
+    return render(request, 'dashboard.html', context)
+
+def teachers(request):
+    users = User.objects.all()
+    context = {
+        'users': users
+    }
+    return render(request, 'dashboard.html', context)

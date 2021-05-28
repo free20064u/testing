@@ -7,8 +7,8 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>WBM ZION SHS</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <meta content="" name="zion">
+  <meta content="" name="amezss">
 
   <!-- Favicons -->
   <link href="{% static 'assets/img/wbm-logo-title.png' %}" rel="icon">
@@ -44,7 +44,7 @@
 
       <div class="row justify-content-center">
         <div class="col-xl-9 d-flex align-items-center">
-          <h1 class="logo mr-auto"><a href="index.html">AMEZSS</a></h1>
+          <h1 class="logo mr-auto"><a href="{% url 'index' %}">AMEZSS</a></h1>
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -71,17 +71,10 @@
               {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}">Logout</a></li>
               <li><a href="#">Hello {{ user }}</a></li>
-                  {% if user.is_superuser == 1 %}
-                    <li class="drop-down"><a href="">Admin Menu</a>
-                      <ul>
-                        <li><a href="#">Add Teacher</a></li>
-                        <li><a href="#">Add Student</a></li>
-                        <li><a href="{% url 'addprogram' %}">Add Program</a></li>
-                        <li><a href="{% url 'addcourse' %}">Add Subject</a></li>
-                        <li><a href="{% url 'addprogramwithcourse' %}">Add program and course</a></li>
-                      </ul>
+                  {% if user.is_superuser and user.is_staff and user.is_active %}
+                    <li class="drop-down"><a href="{% url 'dashboard' %}">Dashboard</a>
                     </li>
-                  {% endif %}
+                  {% endif %} 
               {% else %}
               <li><a href="{% url 'login' %}">Login</a></li>
               <li><a href="{% url 'register' %}">Register</a></li>
@@ -162,7 +155,7 @@
       <div class="copyright-wrap d-md-flex py-4">
         <div class="mr-md-auto text-center text-md-left">
           <div class="copyright">
-            &copy; Copyright <strong><span>Techie</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>WBM ZION SHS</span></strong>. All Rights Reserved
           </div>
           <div class="credits">
             <!-- All the links in the footer should remain intact. -->

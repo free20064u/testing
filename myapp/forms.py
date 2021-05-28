@@ -19,10 +19,13 @@ class Program(ModelForm):
 
 
 class ProgramWithCourse(ModelForm):
-    program_name = forms.ModelChoiceField(queryset=Programs.objects.all(), widget=forms.Select(attrs={'placeholder':'Program', 'class':'form-control'}))
-    course = forms.ModelChoiceField(queryset=Courses.objects.all(),widget=forms.Select(attrs={'placeholder':'Program', 'class':'form-control'}))
+    programs = forms.ModelChoiceField(queryset=Programs.objects.all(), widget=forms.Select(attrs={'placeholder':'Program', 'class':'form-control'}))
+    course1 = forms.ModelChoiceField(queryset=Courses.objects.all(),widget=forms.Select(attrs={'placeholder':'Course1', 'class':'form-control'}))
+    course2 = forms.ModelChoiceField(queryset=Courses.objects.all(),widget=forms.Select(attrs={'placeholder':'Course2', 'class':'form-control'}))
+    course3 = forms.ModelChoiceField(queryset=Courses.objects.all(),widget=forms.Select(attrs={'placeholder':'Course3', 'class':'form-control'}))
+    course4 = forms.ModelChoiceField(queryset=Courses.objects.all(),widget=forms.Select(attrs={'placeholder':'Course4', 'class':'form-control'}))
    
 
     class Meta:
         model = ProgramWithCourses
-        fields = ['program_name', 'course']
+        fields = ['programs', 'course1', 'course2', 'course3', 'course4']
