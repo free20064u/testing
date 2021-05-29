@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Programs, ProgramWithCourses
+from .models import Courses, Programs, ProgramWithCourses
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .forms import Course, Program, ProgramWithCourse
@@ -83,7 +83,7 @@ def addprogramwithcourse(request):
         }
         return render(request, 'addcourse.html', context)
 
-def dashboord(request):
+def dashboard(request):
     return render(request, 'dashboard.html')
 
 
@@ -95,8 +95,34 @@ def allusers(request):
     return render(request, 'dashboard.html', context)
 
 def teachers(request):
-    users = User.objects.all()
+    users = User.objects.filter(is_staff__exact=1)
     context = {
         'users': users
+    }
+    return render(request, 'dashboard.html', context)
+
+def students(request):
+    users = User.objects.filter(is_staff__exact = 0)
+    context = {
+        'users': users
+    }
+    return render(request, 'dashboard.html', context)
+
+
+def program(request):
+    programs = ProgramWithCourses.objects.all()
+    
+    context = {
+        'programs': programs
+    }
+    return render(request, 'dashboard.html', context)
+
+
+def subject(request):
+    subjects = Courses.objects.all()
+
+    
+    context = {
+        'subjects': subjects
     }
     return render(request, 'dashboard.html', context)

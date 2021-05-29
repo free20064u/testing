@@ -117,24 +117,36 @@
 
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'index' %}">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'programs' %}">Programs</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
+            <nav>
+              <ul>
+                <li><a href="{% url 'index'%} ">Home</a></li>
+                <li><a href="{% url 'programs' %}">Programs</a></li>
+                <li><a href="#">Administration</a></li>
+                <li class="drop-down"><a href="">Portfolio</a>
+                  <ul>
+                    <li><a href="#">Teachers</a></li>
+                    <li><a href="#">Students</a></li>
+                    <li><a href="#">Old students</a></li>
+                  </ul>
+                </li>
+                <li class="drop-down"><a href="">Co-curriculum</a>
+                  <ul>
+                    <li><a href="#">Sports</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                    <li><a href="#">Cadet Core</a></li>
+                  </ul>
+                </li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+              </ul>
+              </nav>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Our Programs</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="/programs/General Science">General Science</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/programs/Agriculture">Agricultural Science</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/programs/Business">Business</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/programs/Home Economics">Home Economics</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/programs/Visual Arts">Visual Arts</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/programs/General Arts">General Arts</a></li>
+              {% for  program in programs %}
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ program.programs }}">{{ program.programs }}</a></li>
+              {% endfor %}
             </ul>
           </div>
 

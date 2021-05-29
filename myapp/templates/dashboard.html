@@ -8,10 +8,10 @@
         <div class="col-2" style="background-image: url({% static 'assets/img/counts-bg.png' %}) ">
             <ul style="list-style-type: none;">
                 <li class="mt-3"><a href="{% url 'allusers' %}" style="color:white;">Users</a></li>
-                <li class="mt-3"><a href="" style="color:white;">Teacher</a></li>
-                <li class="mt-3"><a href="#" style="color:white;">Student</a></li>
-                <li class="mt-3"><a href="{% url 'addprogram' %}" style="color:white;">Program</a></li>
-                <li class="mt-3"><a href="{% url 'addcourse' %}" style="color:white;">Subject</a></li>
+                <li class="mt-3"><a href="{% url 'teachers' %}" style="color:white;">Teacher</a></li>
+                <li class="mt-3"><a href="{% url 'students' %}" style="color:white;">Student</a></li>
+                <li class="mt-3"><a href="{% url 'program' %}" style="color:white;">Program</a></li>
+                <li class="mt-3"><a href="{% url 'subject' %}" style="color:white;">Subject</a></li>
                 <li class="mt-3"><a href="{% url 'addprogramwithcourse' %}" style="color:white;">Program and course</a></li>
             </ul>
         </div>
@@ -44,6 +44,49 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% elif programs is not None %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Program</th>
+                        <th colspan="4">Elective Subjects</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for program in programs %}
+                    <tr>
+                        <td>{{ program.programs }}</td>
+                        <td>{{ program.course1 }}</td>
+                        <td>{{ program.course2 }}</td>
+                        <td>{{ program.course3 }}</td>
+                        <td>{{ program.course4 }}</td>
+                        <td><a href="#">Edit</a></td>
+                        <td><a href="#">Delete</a></td>
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% elif subjects is not None %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Elective Subjects</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject in subjects %}
+                    <tr>
+                        <td>{{ subject.course_name }}</td>
+                        <td><a href="#">Edit</a></td>
+                        <td><a href="#">Delete</a></td>
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+
             
             {% endif %}
         </div>
