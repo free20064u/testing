@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.mail import send_mail
 from .models import Courses, Programs, ProgramWithCourses
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
@@ -6,6 +7,7 @@ from .forms import Course, Program, ProgramWithCourse
 
 # Create your views here.
 prog = ProgramWithCourses.objects.all().order_by('programs')
+
 
 
 def index(request):
@@ -37,6 +39,7 @@ def course(request, course=None):
     if program_with_courses is not None:
         course = course
         context = {
+            'prog': prog,
             'course': course,
             'core_courses': core_courses,
             'program_with_courses': program_with_courses
@@ -155,3 +158,18 @@ def programcourse(request):
         'programcourses': programcourses
     }
     return render(request, 'dashboard.html', context)
+
+
+def send_gmail(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        #message = request.POST['message']
+        message = f'Thanks {name}, your message has been recieved. we will get back to you very soon'
+        from_email = 'free20064u@gmail.com'
+
+        send_mail(subject, message, from_email, [email], fail_silently=True)
+
+        return render(request, 'contact.html')
+        
