@@ -1,9 +1,16 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from myapp.models import ProgramWithCourses
 
 # Create your views here.
+prog = ProgramWithCourses.objects.all()
+
 def register(request):
+    context = {
+        'prog':prog
+    }
+
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -29,12 +36,15 @@ def register(request):
             user.save()
             messages.info(request, 'Registration was successful')
             
-        return render(request, 'register.html')
+        return render(request, 'register.html', context)
 
     else:
-        return render(request, 'register.html')
+        return render(request, 'register.html', context)
 
 def login(request):
+    context = {
+        'prog': prog
+    }
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -44,9 +54,9 @@ def login(request):
             return redirect('/')
         else:
             messages.info(request, 'Invalid password')
-            return render(request, 'login.html')
+            return render(request, 'login.html', context)
     else:
-        return render(request, 'login.html')
+        return render(request, 'login.html', context)
 
 
 def logout(request):

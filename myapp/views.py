@@ -5,21 +5,29 @@ from django.contrib.auth.models import User, auth
 from .forms import Course, Program, ProgramWithCourse
 
 # Create your views here.
+prog = ProgramWithCourses.objects.all().order_by('programs')
+
+
 def index(request):
-    return render(request, 'index.html')
-
-
-def programs(request):
-    programs = ProgramWithCourses.objects.all()
-    
     context = {
-        'programs': programs
+        'prog': prog
+    }
+    return render(request, 'index.html', context)
+
+
+def programs(request):  
+    context = {
+        'programs': prog,
+        'prog': prog,
     }
     return render(request, 'programs.html', context)
 
 
 def contact(request):
-    return render(request, 'contact.html')
+    context = {
+        'prog': prog
+    }
+    return render(request, 'contact.html', context)
 
 
 def course(request, course=None):
@@ -45,11 +53,12 @@ def addcourse(request):
         form.is_valid()
         form.save()
         messages.info(request, 'Course has been added succesfully')
-        return render(request, 'addcourse.html')
+        return render(request, 'dashboard.html')
     else:   
         form = Course()
         context = {
-        'form': form
+            'prog': prog,
+            'form': form
         }
         return render(request, 'addcourse.html', context)
 
@@ -60,11 +69,12 @@ def addprogram(request):
         form.is_valid()
         form.save()
         messages.success(request, 'Program was added succesfully')
-        return render(request, 'addcourse.html')
+        return render(request, 'dashboard.html')
     else:
         form = Program()
         context = {
-        'form': form
+            'prog': prog,
+            'form': form
         }
         return render(request, 'addcourse.html', context)
 
@@ -75,54 +85,73 @@ def addprogramwithcourse(request):
         form.is_valid()
         form.save()
         messages.success(request, 'Program with course was add succefully')
-        return render(request, 'addcourse.html')
+        return render(request, 'dashboard.html')
     else:
         form = ProgramWithCourse()
         context = {
+            'prog': prog,
             'form': form
         }
         return render(request, 'addcourse.html', context)
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    context = {
+        'prog': prog
+    }
+    return render(request, 'dashboard.html',context)
 
 
 def allusers(request):
-    users = User.objects.all()
+    users = User.objects.all().order_by('username')
     context = {
+        'prog': prog,
         'users': users
     }
     return render(request, 'dashboard.html', context)
 
 def teachers(request):
-    users = User.objects.filter(is_staff__exact=1)
+    users = User.objects.filter(is_staff__exact=1).order_by()
     context = {
+        'prog': prog,
         'users': users
     }
     return render(request, 'dashboard.html', context)
 
 def students(request):
-    users = User.objects.filter(is_staff__exact = 0)
+    users = User.objects.filter(is_staff__exact = 0).order_by('username')
     context = {
+        'prog': prog,
         'users': users
     }
     return render(request, 'dashboard.html', context)
 
 
 def program(request):
-    programs = ProgramWithCourses.objects.all()
+
+    programs = Programs.objects.all().order_by('program_name')
     
     context = {
+        'prog': prog,
         'programs': programs
     }
     return render(request, 'dashboard.html', context)
 
 
 def subject(request):
-    subjects = Courses.objects.all()
+    subjects = Courses.objects.all().order_by('course_name')
 
     
     context = {
-        'subjects': subjects
+        'prog': prog,
+        'subjects': subjects,
+    }
+    return render(request, 'dashboard.html', context)
+
+
+def programcourse(request):
+    programcourses = ProgramWithCourses.objects.all().order_by('programs_id')
+    context = {
+        'prog': prog,
+        'programcourses': programcourses
     }
     return render(request, 'dashboard.html', context)
