@@ -13,6 +13,8 @@ class Courses(models.Model):
 class Programs(models.Model):
     program_name = models.CharField(max_length=100, default='')
     
+    class Meta:
+        ordering = ['program_name']
 
     def __str__(self):
         return self.program_name
@@ -25,6 +27,9 @@ class ProgramWithCourses(models.Model):
     course2 = models.CharField(max_length=100, default='')
     course3 = models.CharField(max_length=100, default='')
     course4 = models.CharField(max_length=100, default='')
+
+    class Meta:
+        ordering = ['programs']
 
 
     def __str__(self):
