@@ -1,3 +1,5 @@
+import os
+from twilio.rest import Client
 from django.db import models
 
 # Create your models here.
@@ -34,3 +36,7 @@ class ProgramWithCourses(models.Model):
 
     def __str__(self):
         return f"Program:{self.programs}, Course1:{self.course1}"
+
+
+    
+    

@@ -1,9 +1,11 @@
+import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from .models import Courses, Programs, ProgramWithCourses
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .forms import Course, Program, ProgramWithCourse
+from twilio.rest import Client
 
 # Create your views here.
 prog = ProgramWithCourses.objects.all().order_by('programs')
@@ -165,11 +167,23 @@ def send_gmail(request):
         name = request.POST['name']
         email = request.POST['email']
         subject = request.POST['subject']
-        #message = request.POST['message']
-        message = f'Thanks {name}, your message has been recieved. we will get back to you very soon'
+        message = request.POST['message']
+        #message = f'Thanks {name}, your message has been recieved. we will get back to you very soon'
         from_email = 'free20064u@gmail.com'
 
         send_mail(subject, message, from_email, [email], fail_silently=True)
+
+        account_sid = 'AC04ed2a7f8b1e9e772e1a6b78924abe69'
+        auth_token = 'd94b4e97855bed983256a3c2b1b61420'
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+                              body= message,
+                              from_='+16466797538',
+                              to='+233557861007'
+                          )
+
+        print(message.sid)
 
         return render(request, 'contact.html')
         
