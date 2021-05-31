@@ -173,8 +173,8 @@ def send_gmail(request):
 
         send_mail(subject, message, from_email, [email], fail_silently=True)
 
-        account_sid = 'AC04ed2a7f8b1e9e772e1a6b78924abe69'
-        auth_token = 'd94b4e97855bed983256a3c2b1b61420'
+        account_sid = ''
+        auth_token = ''
         client = Client(account_sid, auth_token)
 
         message = client.messages.create(
