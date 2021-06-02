@@ -18,5 +18,6 @@ urlpatterns = [
     path('programcourse/', views.programcourse, name='programcourse'),
     path('send_gmail/', views.send_gmail, name='send_gmail'),
     path('editprogram', views.editprogram, name='editprogram'),
+    path('editcourse', views.editcourse, name='editcourse'),
     
 ]

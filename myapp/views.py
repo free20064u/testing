@@ -9,19 +9,20 @@ from .forms import Course, Program, ProgramWithCourse
 from twilio.rest import Client
 
 # Create your views here.
+# Getting list of programs from the database
 def prog():
     prog = ProgramWithCourses.objects.all().order_by('programs')
     return prog
 
 
-
+# View for the displaying the homepage
 def index(request):
     context = {
         'prog': prog
     }
     return render(request, 'index.html', context)
 
-
+# View for displaying programs offered by school
 def programs(request):
     context = {
         'programs': prog,
@@ -29,14 +30,14 @@ def programs(request):
     }
     return render(request, 'programs.html', context)
 
-
+# View for displaying contact and map page for the school
 def contact(request):
     context = {
         'prog': prog
     }
     return render(request, 'contact.html', context)
 
-
+# View for displaying details about the programs offered by the school
 def course(request, course=None):
     core_courses = ['English', 'Integrated science', 'Mathematics', 'Social Studies']
     courseID = get_object_or_404(Programs, program_name = course)
@@ -54,7 +55,7 @@ def course(request, course=None):
         messages.info(request, 'Cousrse does not exist')
         return render(request, 'course.html')
 
-
+#Adding courses or subjects to the database
 def addcourse(request):
     if request.method == 'POST':
         form = Course(request.POST)
@@ -70,7 +71,7 @@ def addcourse(request):
         }
         return render(request, 'addcourse.html', context)
 
-
+#Adding programs to the database
 def addprogram(request):
     if request.method == 'POST':
         form = Program(request.POST)
@@ -86,7 +87,7 @@ def addprogram(request):
         }
         return render(request, 'addcourse.html', context)
 
-
+#Adding programs and their respective subject or courses
 def addprogramwithcourse(request):
     if request.method == 'POST':
         form = ProgramWithCourse(request.POST)
@@ -102,13 +103,14 @@ def addprogramwithcourse(request):
         }
         return render(request, 'addcourse.html', context)
 
+#Displaying the dashboard for the admin
 def dashboard(request):
     context = {
         'prog': prog
     }
     return redirect('allusers')
 
-
+#Displays all users in the database on dashboard
 def allusers(request):
     users = User.objects.all().order_by('username')
     context = {
@@ -117,6 +119,7 @@ def allusers(request):
     }
     return render(request, 'dashboard.html', context)
 
+#Displays users who are teachers 
 def teachers(request):
     users = User.objects.filter(is_staff__exact=1).order_by()
     context = {
@@ -125,6 +128,7 @@ def teachers(request):
     }
     return render(request, 'dashboard.html', context)
 
+#Displays users who are students
 def students(request):
     users = User.objects.filter(is_staff__exact = 0).order_by('username')
     context = {
@@ -133,7 +137,7 @@ def students(request):
     }
     return render(request, 'dashboard.html', context)
 
-
+#Displays programs in the database to the admin
 def program(request):
 
     programs = Programs.objects.all().order_by('program_name')
@@ -144,7 +148,7 @@ def program(request):
     }
     return render(request, 'dashboard.html', context)
 
-
+#Displayes subjects or courses to the admin
 def subject(request):
     subjects = Courses.objects.all().order_by('course_name')
 
@@ -155,7 +159,7 @@ def subject(request):
     }
     return render(request, 'dashboard.html', context)
 
-
+#Displays programs and their respective courses or subject to the admin
 def programcourse(request):
     programcourses = ProgramWithCourses.objects.all().order_by('programs_id')
     context = {
@@ -164,7 +168,7 @@ def programcourse(request):
     }
     return render(request, 'dashboard.html', context)
 
-
+#Sends email and text message to the user who filled contact forms
 def send_gmail(request):
     if request.method == "POST":
         name = request.POST['name']
@@ -192,7 +196,7 @@ def send_gmail(request):
 
         return render(request, 'contact.html')
 
-
+#Updating of programs allready in the database
 def editprogram(request):
     if request.method == "POST":
         pk = request.POST['pk']
@@ -200,11 +204,31 @@ def editprogram(request):
         form = Program(request.POST, instance=program)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect('/program')
+            return HttpResponseRedirect('/program')
     else:
         pk = request.GET['pk']
         program = get_object_or_404(Programs, pk=pk)
         form = Program(instance=program)
+        context = {
+            'form': form,
+            'prog': prog,
+            'pk': pk
+        }
+        return render(request, 'addcourse.html', context)
+
+#Updationg of courses allready in the database
+def editcourse(request):
+    if request.method == "POST":
+        pk = request.POST['pk']
+        course = get_object_or_404(Courses, pk=pk)
+        form = Course(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/subject')
+    else:
+        pk = request.GET['pk']
+        course = get_object_or_404(Courses, pk=pk)
+        form = Course(instance=course)
         context = {
             'form': form,
             'prog': prog,

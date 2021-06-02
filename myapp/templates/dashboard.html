@@ -116,8 +116,12 @@
                     {% for subject in subjects %}
                     <tr>
                         <td>{{ subject.course_name }}</td>
-                        <td><a href="{% url 'editcourse' pk=subject.id %}">Edit</a></td>
-                        <td><a href="#">Delete</a></td>
+                        <td>
+                            <form action="{% url 'editcourse' %}" method="get">
+                                <input type="hidden" name="pk" value="{{ subject.id }}">
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                        </td>
                     </tr> 
                     {% endfor %}
                 </tbody>
