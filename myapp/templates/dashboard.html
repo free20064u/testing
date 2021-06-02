@@ -17,12 +17,18 @@
         </div>
         <div class="col-10">
             {% if messages %}
-                <p class="alert-danger text-danger mt-5 text-center">
                 {% for message in messages %}
-                    {{ message }} 
-                {% endfor %}</p>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                        <p class="alert-info text-info mt-2 pt-2 pb-2 text-center">
+                        {{ message }} 
+                        </p>
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+                        <p class="alert-success text-success mt-2 pt-2 pb-2 text-center">
+                        {{ message }} 
+                        </p>
+                    {% endif %}
+                {% endfor %}
             {% endif %}
-
             {% if users is not None %}
             <table class="table table-hover">
                 <thead>
@@ -93,8 +99,9 @@
                         <td>{{ program.course3 }}</td>
                         <td>{{ program.course4 }}</td>
                         <td>
-                            <form action="" method="get">
-                                <button type=submit>Edit</button>
+                            <form action="{% url 'editprogramwithcourse' %}" method="get">
+                                <input type="hidden" name="pk" value="{{ program.id }}">
+                                <button type="submit" class="btn btn-primary">Edit</button>
                             </form>
                         </td>
                         <td><a href="#">Delete</a></td>

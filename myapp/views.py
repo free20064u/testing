@@ -61,7 +61,7 @@ def addcourse(request):
         form = Course(request.POST)
         form.is_valid()
         form.save()
-        messages.info(request, 'Course has been added succesfully')
+        messages.success(request, 'Course has been added succesfully')
         return redirect('subject')
     else:   
         form = Course()
@@ -113,6 +113,7 @@ def dashboard(request):
 #Displays all users in the database on dashboard
 def allusers(request):
     users = User.objects.all().order_by('username')
+    messages.info(request, 'All users')
     context = {
         'prog': prog,
         'users': users
@@ -122,6 +123,7 @@ def allusers(request):
 #Displays users who are teachers 
 def teachers(request):
     users = User.objects.filter(is_staff__exact=1).order_by()
+    messages.info(request, 'All Teachers')
     context = {
         'prog': prog,
         'users': users
@@ -131,6 +133,7 @@ def teachers(request):
 #Displays users who are students
 def students(request):
     users = User.objects.filter(is_staff__exact = 0).order_by('username')
+    messages.info(request, 'All Students')
     context = {
         'prog': prog,
         'users': users
@@ -141,6 +144,7 @@ def students(request):
 def program(request):
 
     programs = Programs.objects.all().order_by('program_name')
+    messages.info(request, 'All Programs')
     
     context = {
         'prog': prog,
@@ -151,6 +155,7 @@ def program(request):
 #Displayes subjects or courses to the admin
 def subject(request):
     subjects = Courses.objects.all().order_by('course_name')
+    messages.info(request, 'All Subject')
 
     
     context = {
@@ -162,6 +167,7 @@ def subject(request):
 #Displays programs and their respective courses or subject to the admin
 def programcourse(request):
     programcourses = ProgramWithCourses.objects.all().order_by('programs_id')
+    messages.info(request, 'All programs with courses')
     context = {
         'prog': prog,
         'programcourses': programcourses
@@ -204,6 +210,7 @@ def editprogram(request):
         form = Program(request.POST, instance=program)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Program has been successfully updated')
             return HttpResponseRedirect('/program')
     else:
         pk = request.GET['pk']
@@ -224,6 +231,7 @@ def editcourse(request):
         form = Course(request.POST, instance=course)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Subject has been successfully updated')
             return HttpResponseRedirect('/subject')
     else:
         pk = request.GET['pk']
@@ -236,3 +244,24 @@ def editcourse(request):
         }
         return render(request, 'addcourse.html', context)
 
+
+#Update program with courses already in database
+def editprogramwithcourse(request):
+    if request.method == "POST":
+        pk = request.POST['pk']
+        programwithcourse = get_object_or_404(ProgramWithCourses, pk=pk)
+        form = ProgramWithCourse(request.POST, instance=programwithcourse)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Program with course has been successfully updated')
+            return HttpResponseRedirect('/programcourse')
+    else:
+        pk = request.GET['pk']
+        programwithcourse = get_object_or_404(ProgramWithCourses, pk=pk)
+        form = ProgramWithCourse(instance=programwithcourse)
+        context = {
+            'form': form,
+            'prog': prog,
+            'pk': pk
+        }
+        return render(request, 'addcourse.html', context)
