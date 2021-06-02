@@ -1,4 +1,5 @@
 import os
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from .models import Courses, Programs, ProgramWithCourses
@@ -8,7 +9,9 @@ from .forms import Course, Program, ProgramWithCourse
 from twilio.rest import Client
 
 # Create your views here.
-prog = ProgramWithCourses.objects.all().order_by('programs')
+def prog():
+    prog = ProgramWithCourses.objects.all().order_by('programs')
+    return prog
 
 
 
@@ -19,7 +22,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def programs(request):  
+def programs(request):
     context = {
         'programs': prog,
         'prog': prog,
@@ -58,7 +61,7 @@ def addcourse(request):
         form.is_valid()
         form.save()
         messages.info(request, 'Course has been added succesfully')
-        return render(request, 'dashboard.html')
+        return redirect('subject')
     else:   
         form = Course()
         context = {
@@ -74,7 +77,7 @@ def addprogram(request):
         form.is_valid()
         form.save()
         messages.success(request, 'Program was added succesfully')
-        return render(request, 'dashboard.html')
+        return redirect('program')
     else:
         form = Program()
         context = {
@@ -90,7 +93,7 @@ def addprogramwithcourse(request):
         form.is_valid()
         form.save()
         messages.success(request, 'Program with course was add succefully')
-        return render(request, 'dashboard.html')
+        return redirect('programcourse')
     else:
         form = ProgramWithCourse()
         context = {
@@ -103,7 +106,7 @@ def dashboard(request):
     context = {
         'prog': prog
     }
-    return render(request, 'dashboard.html',context)
+    return redirect('allusers')
 
 
 def allusers(request):
@@ -166,24 +169,46 @@ def send_gmail(request):
     if request.method == "POST":
         name = request.POST['name']
         email = request.POST['email']
+        phone = request.POST['phone']
         subject = request.POST['subject']
         message = request.POST['message']
         #message = f'Thanks {name}, your message has been recieved. we will get back to you very soon'
         from_email = 'free20064u@gmail.com'
 
+
+        #sending an email to customer
         send_mail(subject, message, from_email, [email], fail_silently=True)
 
-        account_sid = 'xxxxxxx'
-        auth_token = 'xxxxxx'
+        #sending a text message to customer
+        account_sid = 'get from twilo'
+        auth_token = 'get from twilo'
         client = Client(account_sid, auth_token)
 
         message = client.messages.create(
                               body= message,
                               from_='+16466797538',
-                              to='+233557861007'
+                              to= phone,
                           )
 
-        print(message.sid)
-
         return render(request, 'contact.html')
-        
+
+
+def editprogram(request):
+    if request.method == "POST":
+        pk = request.POST['pk']
+        program = get_object_or_404(Programs, pk=pk)
+        form = Program(request.POST, instance=program)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/program')
+    else:
+        pk = request.GET['pk']
+        program = get_object_or_404(Programs, pk=pk)
+        form = Program(instance=program)
+        context = {
+            'form': form,
+            'prog': prog,
+            'pk': pk
+        }
+        return render(request, 'addcourse.html', context)
+

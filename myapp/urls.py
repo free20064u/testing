@@ -15,6 +15,8 @@ urlpatterns = [
     path('students/', views.students, name='students'),
     path('program/', views.program, name='program'),
     path('subject/', views.subject, name='subject'),
-    path('programcourse', views.programcourse, name='programcourse'),
-    path('send_gmail', views.send_gmail, name='send_gmail')
+    path('programcourse/', views.programcourse, name='programcourse'),
+    path('send_gmail/', views.send_gmail, name='send_gmail'),
+    path('editprogram', views.editprogram, name='editprogram'),
+    
 ]

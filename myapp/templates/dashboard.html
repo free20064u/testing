@@ -45,7 +45,7 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.is_staff }}</td>
                         <td>{{ user.is_active }}</td>
-                        <td><a href="#">Edit</a></td>
+                        <td><a href="">Edit</a></td>
                         <td><a href="#">Delete</a></td>
                     </tr> 
                     {% endfor %}
@@ -63,13 +63,18 @@
                     {% for program in programs %}
                     <tr>
                         <td>{{ program.program_name }}</td>
-                        <td><a href="#">Edit</a></td>
+                        <td>
+                            <form action="{% url 'editprogram' %}" method="get">
+                                <input type="hidden" name="pk" value="{{ program.id }}">
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                        </td>
                         <td><a href="#">Delete</a></td>
                     </tr> 
                     {% endfor %}
                 </tbody>
             </table>
-            <a href="{% url 'addprogram' %}" class="btn btn-primary">Add New Program</a>
+            <a href="{% url 'addprogram' %}" class="btn btn-primary mb-3">Add New Program</a>
             {% elif programcourses is not None %}
             <table class="table table-hover">
                 <thead>
@@ -87,13 +92,17 @@
                         <td>{{ program.course2 }}</td>
                         <td>{{ program.course3 }}</td>
                         <td>{{ program.course4 }}</td>
-                        <td><a href="#">Edit</a></td>
+                        <td>
+                            <form action="" method="get">
+                                <button type=submit>Edit</button>
+                            </form>
+                        </td>
                         <td><a href="#">Delete</a></td>
                     </tr> 
                     {% endfor %}
                 </tbody>
             </table>
-            <a href="{% url 'addprogramwithcourse' %}" class="btn btn-primary">Add New Program with courses</a>
+            <a href="{% url 'addprogramwithcourse' %}" class="btn btn-primary mb-3">Add New Program with courses</a>
 
             {% elif subjects is not None %}
             <table class="table table-hover">
@@ -107,13 +116,13 @@
                     {% for subject in subjects %}
                     <tr>
                         <td>{{ subject.course_name }}</td>
-                        <td><a href="#">Edit</a></td>
+                        <td><a href="{% url 'editcourse' pk=subject.id %}">Edit</a></td>
                         <td><a href="#">Delete</a></td>
                     </tr> 
                     {% endfor %}
                 </tbody>
             </table>
-            <a href="{% url 'addcourse' %}" class="btn btn-primary">Add New Subject</a>
+            <a href="{% url 'addcourse' %}" class="btn btn-primary mb-3">Add New Subject</a>
 
             
             {% endif %}
