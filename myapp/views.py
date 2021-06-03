@@ -102,13 +102,7 @@ def addprogramwithcourse(request):
             'form': form
         }
         return render(request, 'addcourse.html', context)
-
-#Displaying the dashboard for the admin
-def dashboard(request):
-    context = {
-        'prog': prog
-    }
-    return redirect('allusers')
+        
 
 #Displays all users in the database on dashboard
 def allusers(request):

@@ -44,9 +44,9 @@
 
       <div class="row justify-content-center">
         <div class="col-xl-9 d-flex align-items-center">
-          <h1 class="logo mr-auto"><a href="{% url 'index' %}">AMEZSS</a></h1>
+        <!--  <h1 class="logo mr-auto"><a href="{% url 'index' %}">AMEZSS</a></h1>-->
           <!-- Uncomment below if you prefer to use an image logo -->
-          <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+          <a href="index.html" class="logo mr-auto"><img src="{% static 'assets/img/wbm-logo.png' %}" alt="" class="img-fluid"></a>
 
           <nav class="nav-menu d-none d-lg-block">
             <ul>
@@ -55,8 +55,12 @@
               <li><a href="#">Administration</a></li>
               <li class="drop-down"><a href="#">Portfolio</a>
                 <ul>
+                {% if user.is_staff or user.is_superuser %}
                   <li><a href="#">Teachers</a></li>
+                {% endif %}
+                {% if user.is_staff == False or user.is_superuser %}
                   <li><a href="#">Students</a></li>
+                {% endif %}
                   <li><a href="#">Old students</a></li>
                 </ul>
               </li>
@@ -70,9 +74,8 @@
               <li><a href="{% url 'contact' %}">Contact</a></li>
               {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}">Logout</a></li>
-              <li><a href="#">Hello {{ user }}</a></li>
                   {% if user.is_superuser and user.is_staff and user.is_active %}
-                    <li class="drop-down"><a href="{% url 'dashboard' %}">Dashboard</a>
+                    <li class="drop-down"><a href="{% url 'allusers' %}">Dashboard</a>
                     </li>
                   {% endif %} 
               {% else %}
