@@ -15,7 +15,7 @@
                 <li class="mt-3"><a href="{% url 'programcourse' %}" style="color:white;">Program and course</a></li>
             </ul>
         </div>
-        <div class="col-10">
+        <div class="col-10 ml-0">
             {% if messages %}
                 {% for message in messages %}
                     {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
@@ -30,15 +30,18 @@
                 {% endfor %}
             {% endif %}
             {% if users is not None %}
-            <table class="table table-hover">
+            <table class="table table-hover ml-0">
                 <thead>
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th>Is staff</th>
-                        <th>Is active</th>
+                        <th>Phone</th>
+                        <th>Admin</th>
+                        <th>Student</th>
+                        <th>Staff</th>
+                        <th>Active</th>
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
@@ -49,10 +52,33 @@
                         <td>{{ user.last_name }}</td>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
-                        <td>{{ user.is_staff }}</td>
-                        <td>{{ user.is_active }}</td>
-                        <td><a href="">Edit</a></td>
-                        <td><a href="#">Delete</a></td>
+                        <td>{{ user.profile.phone_number }}</td>
+                        <td>{% if user.is_superuser %}
+                            <input type="checkbox" checked>
+                            {% else %}
+                            <input type="checkbox">
+                            {% endif %}
+                        </td>
+                        <td>{% if user.profile.is_student %}
+                            <input type="checkbox" checked>
+                            {% else %}
+                            <input type="checkbox">
+                            {% endif %}
+                        </td>
+                        <td>{% if user.is_staff  %}
+                            <input type="checkbox" checked>
+                            {% else %}
+                            <input type="checkbox">
+                            {% endif %}
+                        </td>
+                        <td>{% if user.is_active  %}
+                            <input type="checkbox" checked>
+                            {% else %}
+                            <input type="checkbox">
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'editUser' pk=user.id %}">Edit</a></td>
+                        <td><a href="{% url 'deleteUser' pk=user.id %}">Delete</a></td>
                     </tr> 
                     {% endfor %}
                 </tbody>
@@ -75,7 +101,7 @@
                                 <button type="submit" class="btn btn-primary">Edit</button>
                             </form>
                         </td>
-                        <td><a href="#">Delete</a></td>
+                        <td><a class="btn btn-primary" href="{% url 'deleteprogram' pk=program.pk %}">Delete</a></td>
                     </tr> 
                     {% endfor %}
                 </tbody>
@@ -104,7 +130,6 @@
                                 <button type="submit" class="btn btn-primary">Edit</button>
                             </form>
                         </td>
-                        <td><a href="#">Delete</a></td>
                     </tr> 
                     {% endfor %}
                 </tbody>

@@ -19,5 +19,6 @@ urlpatterns = [
     path('editprogram', views.editprogram, name='editprogram'),
     path('editcourse', views.editcourse, name='editcourse'),
     path('editprogramwithcourse', views.editprogramwithcourse, name='editprogramwithcourse'),
+    path('deleteprogram/<int:pk>', views.deleteprogram, name='deleteprogram')
     
 ]

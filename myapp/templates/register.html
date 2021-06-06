@@ -8,14 +8,28 @@
         {% csrf_token %}
         <div class="row justify-content-center">
             <div class="col-6">
-                <input type="text" class="form-control mr-sm-2 mt-3" name="first_name" placeholder="First name">
-                <input type="text" class="form-control mr-sm-2 mt-3" name="last_name" placeholder="Last name">
-                <input type="text" class="form-control mr-sm-2 mt-3" name="username" placeholder="username">
-                <input type="email" class="form-control mr-sm-2 mt-3" name="email" placeholder="email">
-                <input type="password" class="form-control mr-sm-2 mt-3" name="password1" placeholder="Password">
-                <input type="password" class="form-control mr-sm-2 mt-3" name="password2" placeholder="Confirm password">
-                <hr class="mb-3">
+            {% if pk is None %}
+
+                {{ form1.first_name }}<br>
+                {{ form1.last_name }}<br>
+                {{ form1.username }}<br>
+                {{ form1.email }}<br>
+                {{ form2.phone_number }}<br>
+                {{ form1.password }}<br>
+                {{ form1.passwordConfirm }}<br>
                 <button class="btn btn-primary btn-lg btn-block mb-3" type="submit">Register</button>
+            {% else %}
+                {{ form1.first_name }}<br>
+                {{ form1.last_name }}<br>
+                {{ form1.username }}<br>
+                {{ form1.email }}<br>
+                {{ form2.phone_number }}<br>
+                <span>Admin </span>{{ form1.is_superuser }}<br>
+                <span>Staff </span>{{ form1.is_staff }}<br>
+                <span>Student </span>{{ form2.is_student }}<br>
+                <span>Active </span>{{ form1.is_active }}<br>
+                <button class="btn btn-primary btn-lg btn-block mb-3" type="submit">Update</button>
+            {% endif %}
             </div>
         </div>
     </form>

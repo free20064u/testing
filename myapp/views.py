@@ -2,7 +2,7 @@ import os
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
-from .models import Courses, Programs, ProgramWithCourses
+from .models import Profile, Courses, Programs, ProgramWithCourses
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .forms import Course, Program, ProgramWithCourse
@@ -126,7 +126,7 @@ def teachers(request):
 
 #Displays users who are students
 def students(request):
-    users = User.objects.filter(is_staff__exact = 0).order_by('username')
+    users = User.objects.filter(profile__is_student__exact = 1).order_by('profile')
     messages.info(request, 'All Students')
     context = {
         'prog': prog,
@@ -259,3 +259,9 @@ def editprogramwithcourse(request):
             'pk': pk
         }
         return render(request, 'addcourse.html', context)
+
+def deleteprogram(request, pk=None, ):
+    item = get_object_or_404(Programs, pk=pk)
+    item.delete()
+    messages.info(request, f'Program {item} succesfully deleted')
+    return HttpResponseRedirect('/program')

@@ -1,6 +1,33 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import Courses, ProgramWithCourses, Programs
+from django.contrib.auth.models import User
+from .models import Courses, ProgramWithCourses, Programs, Profile
+
+class ProfileForm1(ModelForm):
+    first_name = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}))
+    last_name = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}))
+    username = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Username', 'class': 'form-control'}))
+    email = forms.CharField(label='', widget = forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}))
+    is_superuser = forms.BooleanField(required=False)
+    is_staff = forms.BooleanField(required=False)
+    is_active = forms.BooleanField(required=False)
+    password = forms.CharField(label='', widget = forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}))
+    passwordConfirm = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Password Confirm', 'class': 'form-control'}))
+    
+
+    class Meta:
+        
+        model = User
+        fields = ['first_name', 'last_name','username', 'email','is_superuser', 'password']
+
+class ProfileForm2(ModelForm):
+    phone_number = forms.CharField(label='', widget = forms.TextInput(attrs={'placeholder': 'Phone Number', 'class': 'form-control'}))
+    is_student = forms.BooleanField(required=False)
+    
+    class Meta:
+        model = Profile
+        fields = ['phone_number', 'is_student']
+
 
 
 class Course(ModelForm):
