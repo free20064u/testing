@@ -22,8 +22,12 @@
                         <p class="alert-info text-info mt-2 pt-2 pb-2 text-center">
                         {{ message }} 
                         </p>
-                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
                         <p class="alert-success text-success mt-1 pt-2 pb-2 text-center">
+                        {{ message }} 
+                        </p>
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <p class="alert-danger text-danger mt-1 pt-2 pb-2 text-center">
                         {{ message }} 
                         </p>
                     {% endif %}

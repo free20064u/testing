@@ -32,6 +32,8 @@ def register(request):
                 messages.info(request, 'Email field is empty')    
             elif User.objects.filter(email=email).exists():
                 messages.info(request, 'Email already taken')
+            elif len(password1) <= 8:
+                messages.error(request, 'Password is weak. Your password should be more than 8 characters')
             elif  password1 != password2 :
                 messages.info(request, 'Passwords do not much')
             elif Profile.objects.filter(phone_number=phone_number).exists():
